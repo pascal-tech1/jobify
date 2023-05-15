@@ -1,7 +1,0 @@
-{
-  "singleQuote": true,
-  "trailingComma": "all",
-  "bracketSpacing": false,
-  "object-curly-spacing": ["always", { "objectsInObjects": false }],
-  "proseWrap": "always"
-}

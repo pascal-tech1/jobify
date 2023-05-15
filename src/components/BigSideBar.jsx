@@ -4,12 +4,42 @@ import Logo from '../assets/images/logo.svg';
 import links from '../utils/links';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import  { useEffect, useRef } from 'react';
+import { toggleSidebar } from '../features/layoutSlice/layoutSlice';
 
 
 const Sidebar = () => {
   const { isSidebarOpen, } = useSelector((store) => store.layoutSlice);
+const dispatch = useDispatch()
+
+  // const [isOpen, setIsOpen] = useState(false);
+  const sidebarRef = useRef(null);
+
+  useEffect(() => {
+    // Add event listener to handle clicks outside the sidebar
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      // Clean up the event listener when the component is unmounted
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleClickOutside = (event) => {
+    if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+      // User clicked outside the sidebar, so close it
+     dispatch(toggleSidebar(false))
+    }
+  };
+
+  
+
+
+
+
+
   return (
-    <Wrapper>
+    <Wrapper  ref={sidebarRef}>
       <div className={isSidebarOpen ? 'isOpen' : ''}>
         <img src={Logo} alt='logo' />
         {links?.map((link) => {

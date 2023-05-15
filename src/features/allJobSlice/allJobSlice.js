@@ -5,6 +5,7 @@ import customFetch from '../../utils/axios';
 
 
 const initialState = {
+  isEditing: false,
   isLoading: true,
   isDeleting: false,
   company: '',
@@ -13,7 +14,8 @@ const initialState = {
   sort: 'latest',
   search: '',
   allJobs: [],
-  allJobsError: ''
+  allJobsError: '',
+  jobId: null
 };
 export const getAllJobs = createAsyncThunk(
   'allJobs/getJobs',
@@ -63,6 +65,7 @@ export const deleteJob = createAsyncThunk(
 
 
 
+
 const addJobPageSlice = createSlice({
   name: 'addJobPageSlice',
   initialState,
@@ -71,6 +74,7 @@ const addJobPageSlice = createSlice({
     modifyAllJobSlice: (state, { payload: { name, value } }) => {
       state[name] = value;
     },
+  
     clearJobInputs: (state) => {
      return initialState
     },
@@ -92,6 +96,10 @@ const addJobPageSlice = createSlice({
       state.isLoading = false;
      
     },
+    [deleteJob.pending]: (state,{payload}) => {
+      
+      state.isDeleting = true;
+    },
     [deleteJob.fulfilled]: (state,{payload}) => {
       toast.success(payload)
       state.isDeleting = false;
@@ -102,6 +110,7 @@ const addJobPageSlice = createSlice({
       
      toast.error(payload)
     },
+
   },
 });
 

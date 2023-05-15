@@ -6,22 +6,25 @@ import styled from 'styled-components';
 import moment from 'moment';
 import { deleteJob, modifyAllJobSlice } from '../features/allJobSlice/allJobSlice';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 
 
 
 const Jobs = () => {
-  const { isLoading,allJobs,isDeleting,allJobsError } = useSelector((store) => store.allJobSlice);
+  const { isLoading,allJobs,isDeleting,allJobsError,jobId } = useSelector((store) => store.allJobSlice);
   const dispatch = useDispatch()
 const [deletingId, setDeletingId] = useState(1)
+console.log(jobId)
 
-
-const handleEditing = (e)=>{
-  e.preventDefault()
+const handleEditing = (jobId)=>{
+dispatch(modifyAllJobSlice({name: 'jobId', value: jobId}))
+dispatch(modifyAllJobSlice({name: 'isEditing', value: true}))
 }
 const handleDelete = (_id)=>{
 dispatch(deleteJob(_id))
 dispatch(modifyAllJobSlice({name: 'isDeleting', value: true}))
+
 }
 
 
@@ -67,9 +70,16 @@ dispatch(modifyAllJobSlice({name: 'isDeleting', value: true}))
               </div>
               <div className={`status ${status}`}>{status}</div>
               <div>
-                <Button className='edit-btn' onClick={handleEditing}>
+                <Button>
+                <Link to={'/add-job'}  onClick={(e)=>{
+                  // e.preventDefault()
+                  handleEditing(_id)
+
+                }}>
                   Edit
+                </Link>
                 </Button>
+               
                 <Button
                   className='delete-btn'
                   onClick={(e) => {

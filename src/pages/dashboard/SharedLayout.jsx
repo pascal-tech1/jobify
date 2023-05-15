@@ -23,9 +23,7 @@ const DashBoardContainer = styled.main`
   display: grid;
   grid-template-rows: 9rem 1fr;
   height: 100vh;
-  @media screen n {
-    
-  }
+ 
 overflow-y: hidden;
   grid-template-columns: [sidebar-start] minmax(min-content, max-content) [sidebar-gap]minmax(4rem, 1fr) [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end]) [center-end] minmax(4rem, 1fr) [end-margin];
 
